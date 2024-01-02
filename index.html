@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<title>CANYON中文資訊論壇</title>	
+	<style>
+		:root {
+  		scroll-padding-top: 64px;
+		}
+		.background-image {
+    		background-image: url('https://drive.google.com/uc?export=view&id=1YUqa_8CZvjU1XSEyd4GQxhhY4ylijWW0');
+    		position: fixed;
+    		top: 0;
+    		left: 0;
+    		width: 100%;
+    		height: 100%;
+    		z-index: -1;
+		background-size: cover;
+		background-position: center center;
+    		background-repeat: no-repeat;
+		}
+  		#mainContainer.container {
+  		background-color: rgba(255, 255, 255, 0.5);
+		color:black;
+		padding: 20px;
+		padding-top: 64px;
+		}
+		#comment.container {
+		background-color: rgba(255, 255, 255, 1);
+		color:black;
+		padding: 30px;
+		padding-top: 15px;
+		}
+		nav {
+    		position: fixed;
+    		top: 0;
+    		width: 100%;
+    		z-index: 10;
+  		}
+  		nav, .nav-wrapper,
+  		footer, .page-footer {
+    		background-color: #424242;
+    		z-index: 1;
+  		}
+		footer.page-footer {
+    		padding-bottom: 20px;
+		}
+		div.card .card-title {
+    		background-color: rgba(255, 255, 255, 0.5);
+		padding: 5px 10px !important;
+    		border-radius: 10px;
+		color: black !important;
+  		font-weight: bold;
+		}
+		.input-field label {
+    			color: #424242;
+		}
+		.input-field i.prefix {
+    			color: #000;
+		}
+		.input-field input[type=text]:focus + label:not(.browser-default),
+		.input-field textarea.materialize-textarea:focus + label {
+     			color: #2196F3;
+   		}
+		.input-field input[type=text]:not(.browser-default):focus,
+		.input-field textarea.materialize-textarea:focus {
+     			border-bottom: 1px solid #2196F3;
+     			box-shadow: 0 1px 0 0 #2196F3;
+   		}
+		.input-field input[type=text].valid {
+     			border-bottom: 1px solid #4caf50;
+     			box-shadow: 0 1px 0 0 #4caf50;
+   		}
+		.input-field input[type=text].invalid,
+		.input-field textarea.materialize-textarea.invalid {
+     			border-bottom: 1px solid #f44336 ;
+     			box-shadow: 0 1px 0 0 #f44336;
+   		}
+		.input-field .prefix.active {
+     			color: #2196F3;
+   		}
+		@media screen and (max-width: 650px) {
+    			.hide-on-custom {
+      			display: none !important;
+    			}
+  		}
+	</style>
+	
+	<script>
+    	function scrollToElement(id) {
+        	var element = document.getElementById(id);
+        	if (element) {
+            	element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+		}
+    	}
+	</script>
+
+	<!--讀取自行車資訊試算表-->
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+    	google.charts.load('current', {'packages':['corechart']});
+		
+    	function load(tag) {
+        	var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/edit?usp=sharing';
+        	var query = new google.visualization.Query(url);
+        	query.setQuery("select * where A='"+tag+"'");
+        	query.send(processData);
+    	}
+    	function processData(response) {
+        	var dataTable = response.getDataTable();
+        	var rows = dataTable.getNumberOfRows();
+		var columns = dataTable.getNumberOfColumns();
+		var tag = dataTable.getFormattedValue(0,0);
+		var datas = [];
+		for (var r=0; r<rows; r++) {
+			data = [];
+			for (var i=1; i<columns; i++){
+				data.push(dataTable.getFormattedValue(r, i));
+			}
+			datas.push(data);
+        	}
+		if (tag==="CFR"||tag==="CF SLX"){
+			bikeCard(datas,tag);
+		}
+		else if (tag==="MAP SPOT"||tag==="MAP NEWBIE"||tag==="MAP EASY"||tag==="MAP NORMAL"||tag==="MAP HARD"||tag==="MAP EXTREME"){
+			mapCard(datas,tag);
+		}
+    	}
+
+    	function bikeCard(data,tag) {	
+		var card = "";
+		for (var r=0 ; r<data.length ; r++) {
+			card+=	`
+			<div class="col s12 m12 l4">
+				<div class="card">
+					<div class="card-image">
+			  			<img src=${data[r][2]}>
+						<span class="card-title">${data[r][0]}</span>
+					</div>
+					<div class="card-content">
+			  			<p>${data[r][1]}</p>
+       						<p>重量(車架)：${data[r][3]}</p>
+					</div>
+					<div class="card-action">
+						<a href="#">詳細資訊</a>
+			   		</div>
+				</div>
+			</div>`;
+		}
+		if (tag === "CFR") {
+			document.getElementById("cardCFR").innerHTML = card;
+		}
+		else if (tag === "CF SLX") {
+			document.getElementById("cardCFSLX").innerHTML = card;
+		}
+	}
+
+	function mapCard(data,tag) {
+		var card="";
+		for (var r=0 ; r<data.length ; r++) {
+			card+=`<div class="col s12 m12 l6" style="height: 100%;">
+   					<div class="card"  style="height: 95%;">
+   					<div class="card-content" style="height: 100%;">					
+	 					<span class="card-title">${data[r][0]}</span>
+  						<iframe src="${data[r][2]}" width="100%" height="80%" style="border:0; overflow: hidden;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  						<p>${data[r][1]}</p>
+  					</div>
+   					</div>
+      				</div>`;
+		}if (tag === "MAP SPOT") {
+			document.getElementById("mapSPOT").innerHTML = card;
+		}else if (tag === "MAP NEWBIE") {
+			document.getElementById("mapNEWBIE").innerHTML = card;
+		}else if (tag === "MAP EASY") {
+			document.getElementById("mapEASY").innerHTML = card;
+		}else if (tag === "MAP NORMAL") {
+			document.getElementById("mapNORMAL").innerHTML = card;
+		}else if (tag === "MAP HARD") {
+			document.getElementById("mapHARD").innerHTML = card;
+		}else if (tag === "MAP EXTREME") {
+			document.getElementById("mapEXTREME").innerHTML = card;
+		}
+	}
+	
+	window.onload = function () {
+    		var disclaimerText = `本站資訊僅供參考，購買時請以CANYON官方網站為準。
+如有謬誤，還請不吝指正。`;
+    		var disclaimerConfirmed = confirm(disclaimerText);
+    		if (disclaimerConfirmed) {
+		document.getElementById("spawnCFR").click();
+        	document.getElementById("spawnCFSLX").click();
+		document.getElementById("spawnMAPSPOT").click();
+		document.getElementById("spawnMAPNEWBIE").click();
+		document.getElementById("spawnMAPEASY").click();
+		document.getElementById("spawnMAPNORMAL").click();
+		document.getElementById("spawnMAPHARD").click();
+		document.getElementById("spawnMAPEXTREME").click();
+		}
+    		else {
+        		window.location.href = "https://ucchen45.github.io/html_homework.github.io/HTML_homework/index.html";
+		}
+	};
+	</script>
+</head>
+<body>
+	<!--頂部區塊-->
+	<nav>
+    	<div class="nav-wrapper">
+      		<a href="#" onclick="scrollToElement('0')" class="brand-logo left">CANYON中文資訊論壇</a>
+      		<ul id="nav-mobile" class="right">
+        		<li class="hide-on-custom"><a href="#" onclick="event.preventDefault();scrollToElement('1')">CANYON公路車</a></li>
+        		<li class="hide-on-custom"><a href="#" onclick="event.preventDefault();scrollToElement('2')">臺中自行車地圖</a></li>
+        		<li class="hide-on-custom"><a href="#" onclick="event.preventDefault();scrollToElement('3')">留言板</a></li>
+		</ul>
+	</div>
+	</nav>
+	
+	<!--內文-->
+	<div class="background-image"></div>
+
+	<div class="container" id="mainContainer">
+		<h4 id="0">前言</h4>
+		<p>CANYON，一個於三大環賽擁有許多亮眼表現的德國品牌。許多車友因為高昂運費以及英文網站而對它敬而遠之，但其實在眾多一級車之中，即使加上運費，它仍是划算的選擇(興許與它的網路直銷模式有關)。且與許多廠牌為換取重量，犧牲部分空氣力學效果的折衷做法不同，它們的空力車是純粹的，也是作者所推崇之處。</p>
+		<p>可以參考這位YouTuber的分享：</p>
+		<div class="row">
+    		<div class="col s12 m12 l6" style="display: flex; width: 100%; height: 400px;">
+        		<iframe width="560" height="315" src="https://www.youtube.com/embed/lAnGTrwfK1c?si=WQ0gOhmy916UQewt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="flex: 1;"></iframe>
+        		<iframe width="560" height="315" src="https://www.youtube.com/embed/eysRy2iUkDM?si=7a3NBlxgvV4rf5rq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="flex: 1;"></iframe>
+    		</div>
+		</div>
+		<p>因作者時間有限，本站目前暫且僅止於Shimano系統之公路車相關資訊，還請見諒。</p>
+
+		<!--車款資訊-->
+		<h4 id="1">CANYON公路車</h4>
+		<h5>旗艦-CFR</h5>
+		<div class="row" id="cardCFR">
+			<a onclick="load('CFR')" id="spawnCFR">載入中</a>
+		</div>
+	
+		<h5>高階-CF SLX</h5>
+		<div class="row" id="cardCFSLX">
+			<a onclick="load('CF SLX')" id="spawnCFSLX">載入中</a>
+		</div>
+
+		<!--臺中自行車地圖-->
+		<h4 id="2">臺中自行車地圖</h4>
+		<p>牽了新車，下一步當然是到處騎車，追不上其他車友也沒有關係，至少能閃瞎他們的眼睛。</p>
+		<p>而以下路線分級，是按照騎程時間來區分，同一級中越靠後的路線難度越高，可以按照自己的時間與訓練需求選擇。</p>
+		<p>路線難度僅僅是按照能否完成區分，成為高手之後還是能繼續在喜歡的路線騎車，只要不斷突破自己的紀錄就是有在進步。</p>
+		
+		<h5>交流地點</h5>
+		<p>在出發之前，不妨找些志同道合的車友交流一番，或許還能相約一起騎車，既不怕迷路，也有互相激勵的效果。</p>
+		<div class="row" id="mapSPOT" style="height: 500px;">
+			<a onclick="load('MAP SPOT')" id="spawnMAPSPOT">載入中</a>
+		</div>
+		
+		<h5>路線-入門</h5>
+		<p>幾乎是任何人都能完成的路線，當你騎完一趟松鼠坡仍然意猶未盡，就該嘗試下一級的路線了。</p>
+		<div class="row" id="mapNEWBIE" style="height: 500px;">
+			<a onclick="load('MAP NEWBIE')" id="spawnMAPNEWBIE">載入中</a>
+		</div>
+
+		<h5>路線-簡單</h5>
+		<p>適合平日早晨出門運動的路線，結束之後吃個早餐，就是神清氣爽的一天最好的開始。</p>
+		<div class="row" id="mapEASY" style="height: 500px;">
+			<a onclick="load('MAP EASY')" id="spawnMAPEASY">載入中</a>
+		</div>
+
+		<h5>路線-普通</h5>
+		<p>適合平時週末練車，鍛鍊身體的同時也能欣賞風景，而且各休息點有許多美食待人享用，兜兜風轉換心情，繼續迎接下一個星期。</p>
+		<div class="row" id="mapNORMAL" style="height: 500px;">
+			<a onclick="load('MAP NORMAL')" id="spawnMAPNORMAL">載入中</a>
+		</div>
+
+		<h5>路線-困難</h5>
+		<p>深入山路的路線，補給要事先做好規劃，並且注意高海拔溫差與路況，也要有換胎與簡易維修工具，才能安全進行體能挑戰。</p>
+		<div class="row" id="mapHARD" style="height: 500px;">
+			<a onclick="load('MAP HARD')" id="spawnMAPHARD">載入中</a>
+		</div>
+		
+		<h5>路線-極限</h5>
+		<p>進行時間極長，非常考驗耐力，務必量力而為，且注意評估時間，避免天黑時從山區下滑以保安全。</p>
+		<div class="row" id="mapEXTREME" style="height: 500px;">
+			<a onclick="load('MAP EXTREME')" id="spawnMAPEXTREME">載入中</a>
+		</div>
+		
+		<!--留言板-->
+		<h4 id="3">留言板</h4>
+		<div class="container" id="comment">
+			<p>無須登入，快來與車友們交換意見吧。</p>
+			<hr color="white">
+			<div class="input-field">
+          			<i class="material-icons prefix">account_circle</i>
+          			<input id="icon_prefix" type="text" class="validate" data-length="20">
+          			<label for="icon_prefix">暱稱</label>
+        		</div>
+			<div class="input-field">
+          			<textarea id="textarea1" class="materialize-textarea"></textarea>
+          			<label for="textarea1">留言內容</label>
+        		</div>
+			<div class="right-align">
+				<button class="btn waves-effect waves-light blue" type="submit" name="action">送出
+    				<i class="material-icons right">send</i>
+  				</button>
+			</div>
+		</div>
+	</div>
+		
+	<!--底部-->
+	<footer class="page-footer">
+    	<div class="row">
+	<div class="col l3 m1 s2"></div>
+	<div class="col l2 m4 s10">
+                <h5 class="white-text">關於作者</h5>
+                <p class="grey-text text-lighten-3">陳又晞，目前就讀中興大學，自由車社成員，自行車愛好者。</p>
+		<p class="grey-text text-lighten-3"><i class="material-icons prefix" style="font-size: 20px">email</i>youxichen55@gmail.com</p>
+        </div>
+	<div class="col l0 m2 s2"></div>
+	<div class="col l4 m4 s10">
+                <h5 class="white-text">連結</h5>
+                <ul>
+                  	<li><a class="grey-text text-lighten-3" href="https://github.com/ucchen45/html_homework.github.io">Github</a></li>
+			<li><a class="grey-text text-lighten-3" href="https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/edit?usp=sharing">網站資料試算表</a></li>
+                  	<li><a class="grey-text text-lighten-3" href="https://www.canyon.com/en-tw/">CANYON官方網站</a></li>
+			<li><a class="grey-text text-lighten-3" href="https://www.facebook.com/NCHUCyclingClub">中興大學自由車社粉絲專頁</a></li>
+                </ul>
+        </div>
+	<div class="col l3 m1 s0"></div>
+	</footer>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
