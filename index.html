@@ -197,7 +197,8 @@
 	function showComment(data,tag) {
 		var comment="";
 		for (var r=0 ; r<data.length ; r++){
-			comment+=`<p>B${data[r][1]} ${data[r][2]}${data[r][4]}</p>
+			comment+=`<p color="blue">${data[r][4]}</p>
+   				<p>B${data[r][1]} ${data[r][2]}</p>
    				<p>${data[r][3]}</p>`;
 		}document.getElementById("showCOMMENT").innerHTML = comment;
 	}
