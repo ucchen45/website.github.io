@@ -105,7 +105,7 @@
     	google.charts.load('current', {'packages':['corechart']});
 		
     	function load(tag) {
-        	var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/edit?usp=sharing';
+        	var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=0';
         	var query = new google.visualization.Query(url);
         	query.setQuery("select * where B='"+tag+"'");
         	query.send(processData);
