@@ -105,14 +105,14 @@
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
     	google.charts.load('current', {'packages':['corechart']});
-	<!--根據標籤找到對應資料-->	
+		
     	function load(tag) {
         	var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/edit?usp=sharing';
         	var query = new google.visualization.Query(url);
         	query.setQuery("select * where B='"+tag+"'");
         	query.send(processData);
     	}
-	<!--將對應標籤的資料傳遞給對應函式-->
+	
     	function processData(response) {
         	var dataTable = response.getDataTable();
         	var rows = dataTable.getNumberOfRows();
@@ -136,7 +136,7 @@
 			showCOMMENT(datas,tag);
 		}
     	}
-	<!--產生車款卡片-->
+	
     	function bikeCard(data,tag) {	
 		var card = "";
 		for (var r=0 ; r<data.length ; r++) {
@@ -164,7 +164,7 @@
 			document.getElementById("cardCFSLX").innerHTML = card;
 		}
 	}
-	<!--產生地圖卡片-->
+	
 	function mapCard(data,tag) {
 		var card="";
 		for (var r=0 ; r<data.length ; r++) {
@@ -191,7 +191,7 @@
 			document.getElementById("mapEXTREME").innerHTML = card;
 		}
 	}
-	<!--顯示留言-->
+	
 	function showCOMMENT(data,tag){
 		var comment="";
 		for (var r=0 ; r<data.length ; r++){
@@ -200,7 +200,7 @@
    `
 		}
 	}
-	<!--載入時執行-->
+	
 	window.onload = function () {
     		var disclaimerText = `本站資訊僅供參考，購買時請以CANYON官方網站為準。
 如有謬誤，還請不吝指正。`;
