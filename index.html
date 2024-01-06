@@ -203,7 +203,44 @@
        			<hr color="gray">`;
 		}document.getElementById("showCOMMENT").innerHTML = comment;
 	}
-	
+
+	function checkCount() {
+		var url='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1230097452';
+		query.setQuery("select * where B='COMMENT'");
+		query.send(Count);
+	}
+	function Count(data) {
+		count = dataTable.getNumberOfRows();
+		count += 1;
+		document.getElementById("getNUMBER").innerHTML = count;
+	}
+
+	function submitComment() {
+    		var nickname = document.getElementById('icon_prefix').value;
+    		var comment = document.getElementById('textarea1').value;
+
+    		checkCount();
+    		setTimeout(function() {
+        	var form = document.createElement('form');
+        	form.target = '_blank';
+        	form.method = 'POST';
+        	form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSdAROsTF04x-I9K57HfPzHWQh3Sc0sxG5k1kfCGiQyIwetfeQ/formResponse';
+        	form.style.display = 'none';
+        	function createInput(name, value) {
+        		var input = document.createElement('input');
+            		input.type = 'hidden';
+            		input.name = name;
+            		input.value = value;
+            		form.appendChild(input);
+        	}
+        	createInput('entry.1464776894', 'COMMENT');
+        	createInput('entry.195910240', document.getElementById("getNUMBER").innerHTML);
+        	createInput('entry.581370753', nickname);
+        	createInput('entry.1171223318', comment);
+        	document.body.appendChild(form);
+        	form.submit();
+    		}, 1000);
+	}	
 	window.onload = function () {
     		var disclaimerText = `本站資訊僅供參考，購買時請以CANYON官方網站為準。
 如有謬誤，還請不吝指正。`;
@@ -322,7 +359,7 @@
           			<label for="textarea1">留言內容</label>
         		</div>
 			<div class="right-align">
-				<button class="btn waves-effect waves-light blue" type="submit" name="action">送出
+				<button class="btn waves-effect waves-light blue" type="submit" name="action" onclick="submitComment()">送出
     				<i class="material-icons right">send</i>
   				</button>
 			</div>
