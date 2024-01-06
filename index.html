@@ -106,7 +106,7 @@
 		
     	function load(tag) {
         	if (tag==="COMMENT"){
-			var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1230097452';
+			var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1000193211';
 		}
 		else {
 			var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=0';
@@ -205,7 +205,7 @@
 	}
 
 	function checkCount() {
-    		var url = 'https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1230097452';
+    		var url = 'https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1000193211';
     		var query = new google.visualization.Query(url);
 		query.setQuery("select * where B='COMMENT'");
     		query.send(Count);
