@@ -213,20 +213,18 @@
 		count = dataTable.getNumberOfRows();
 		count += 1;
 		document.getElementById("getNUMBER").innerHTML = count;
+		submitFormWithCount(count);
 	}
-
-	function submitComment() {
+	
+	function submitFormWithCount(count) {
     		var nickname = document.getElementById('icon_prefix').value;
     		var comment = document.getElementById('textarea1').value;
-
-    		checkCount();
-    		setTimeout(function() {
-        	var form = document.createElement('form');
-        	form.target = '_blank';
+    		var form = document.createElement('form');
+    		form.target = '_blank';
         	form.method = 'POST';
         	form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSdAROsTF04x-I9K57HfPzHWQh3Sc0sxG5k1kfCGiQyIwetfeQ/formResponse';
         	form.style.display = 'none';
-        	function createInput(name, value) {
+		function createInput(name, value) {
         		var input = document.createElement('input');
             		input.type = 'hidden';
             		input.name = name;
@@ -234,13 +232,20 @@
             		form.appendChild(input);
         	}
         	createInput('entry.1464776894', 'COMMENT');
-        	createInput('entry.195910240', document.getElementById("getNUMBER").innerHTML);
         	createInput('entry.581370753', nickname);
         	createInput('entry.1171223318', comment);
-        	document.body.appendChild(form);
-        	form.submit();
-    		}, 1000);
-	}	
+    		createInput('entry.195910240', count.toString());
+    		document.body.appendChild(form);
+    		form.submit();
+
+    		document.getElementById('icon_prefix').value = '';
+    		document.getElementById('textarea1').value = '';
+	}
+
+	function submitComment() {
+    		checkCount(); // 這將會觸發表單提交
+	}
+		
 	window.onload = function () {
     		var disclaimerText = `本站資訊僅供參考，購買時請以CANYON官方網站為準。
 如有謬誤，還請不吝指正。`;
