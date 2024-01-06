@@ -129,6 +129,9 @@
 		else if (tag==="MAP SPOT"||tag==="MAP NEWBIE"||tag==="MAP EASY"||tag==="MAP NORMAL"||tag==="MAP HARD"||tag==="MAP EXTREME"){
 			mapCard(datas,tag);
 		}
+		else if (tag==="COMMENT") {
+			showComment(datas,tag);
+		}
     	}
 
     	function bikeCard(data,tag) {	
@@ -185,6 +188,14 @@
 			document.getElementById("mapEXTREME").innerHTML = card;
 		}
 	}
+
+	function showComment(data,tag) {
+		var comment="";
+		for (var r=0 ; r<data.length ; r++){
+			comment+=`<p>B${data[r][1]} ${data[r][2]}${data[r][4]}</p>
+   				<p>${data[r][3]}</p>`
+		}document.getElementById("showCOMMENT").innerHTML = comment;;
+	}
 	
 	window.onload = function () {
     		var disclaimerText = `本站資訊僅供參考，購買時請以CANYON官方網站為準。
@@ -199,6 +210,7 @@
 			document.getElementById("spawnMAPNORMAL").click();
 			document.getElementById("spawnMAPHARD").click();
 			document.getElementById("spawnMAPEXTREME").click();
+			document.getElementById("spawnCOMMENT").click();
 		}
     		else {
         		window.location.href = "https://ucchen45.github.io/website.github.io/";
@@ -210,7 +222,7 @@
 	<!--頂部區塊-->
 	<nav>
     	<div class="nav-wrapper">
-      		<a href="#" onclick="scrollToElement('0')" class="brand-logo left">CANYON中文資訊論壇</a>
+      		<a href="#" onclick="event.preventDefault();scrollToElement('0')" class="brand-logo left">CANYON中文資訊論壇</a>
       		<ul id="nav-mobile" class="right">
         		<li class="hide-on-custom"><a href="#" onclick="event.preventDefault();scrollToElement('1')">CANYON公路車</a></li>
         		<li class="hide-on-custom"><a href="#" onclick="event.preventDefault();scrollToElement('2')">臺中自行車地圖</a></li>
@@ -307,6 +319,10 @@
     				<i class="material-icons right">send</i>
   				</button>
 			</div>
+		</div>
+		<hr color="gray">
+		<div class="container" id="showComment">
+			<a onclick="load('COMMENT')" id="spawnCOMMENT">載入中</a>
 		</div>
 	</div>
 		
