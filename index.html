@@ -103,7 +103,7 @@
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
     	google.charts.load('current', {'packages':['corechart']});
-		
+	var submitted = false;	
     	function load(tag) {
         	if (tag==="COMMENT"){
 			var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1000193211';
@@ -225,7 +225,7 @@
     		var nickname = document.getElementById('icon_prefix').value;
     		var comment = document.getElementById('textarea1').value;
     		var form = document.createElement('form');
-    		form.target = '_blank';
+    		form.target = 'hidden_iframe';
         	form.method = 'POST';
         	form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSdAROsTF04x-I9K57HfPzHWQh3Sc0sxG5k1kfCGiQyIwetfeQ/formResponse';
         	form.style.display = 'none';
@@ -242,14 +242,13 @@
     		createInput('entry.195910240', count.toString());
     		document.body.appendChild(form);
     		form.submit();
-
     		document.getElementById('icon_prefix').value = '';
     		document.getElementById('textarea1').value = '';
 	}
-	var submitted = false;
+	
 	function prepareSubmit() {
-    		submitted = true;
-    		submitComment();
+    		submitted = true; // 先將提交標誌設為 true
+    		submitComment(); // 然後提交評論
 	}
 
 	function submitComment() {
