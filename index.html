@@ -7,8 +7,6 @@
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
 	<title>CANYON中文資訊論壇</title>	
-	
-	<!--網站樣式設定-->
 	<style>
 		:root {
   		scroll-padding-top: 64px;
@@ -91,7 +89,7 @@
     			}
   		}
 	</style>
-	<!--滾動效果-->
+	
 	<script>
     	function scrollToElement(id) {
         	var element = document.getElementById(id);
@@ -101,7 +99,7 @@
     	}
 	</script>
 
-	<!--讀取資料試算表-->
+	<!--讀取自行車資訊試算表-->
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
     	google.charts.load('current', {'packages':['corechart']});
@@ -112,7 +110,6 @@
         	query.setQuery("select * where B='"+tag+"'");
         	query.send(processData);
     	}
-	
     	function processData(response) {
         	var dataTable = response.getDataTable();
         	var rows = dataTable.getNumberOfRows();
@@ -132,11 +129,8 @@
 		else if (tag==="MAP SPOT"||tag==="MAP NEWBIE"||tag==="MAP EASY"||tag==="MAP NORMAL"||tag==="MAP HARD"||tag==="MAP EXTREME"){
 			mapCard(datas,tag);
 		}
-		else if (tag==="COMMENT"){
-			showCOMMENT(datas,tag);
-		}
     	}
-	
+
     	function bikeCard(data,tag) {	
 		var card = "";
 		for (var r=0 ; r<data.length ; r++) {
@@ -164,7 +158,7 @@
 			document.getElementById("cardCFSLX").innerHTML = card;
 		}
 	}
-	
+
 	function mapCard(data,tag) {
 		var card="";
 		for (var r=0 ; r<data.length ; r++) {
@@ -192,20 +186,11 @@
 		}
 	}
 	
-	function showCOMMENT(data,tag){
-		var comment="";
-		for (var r=0 ; r<data.length ; r++){
-			comment+=`<p>${data[r][]}</p>
-   
-   `
-		}
-	}
-	
 	window.onload = function () {
     		var disclaimerText = `本站資訊僅供參考，購買時請以CANYON官方網站為準。
 如有謬誤，還請不吝指正。`;
-		var disclaimerConfirmed = confirm(disclaimerText);
-		if (disclaimerConfirmed) {
+    		var disclaimerConfirmed = confirm(disclaimerText);
+    		if (disclaimerConfirmed) {
 			document.getElementById("spawnCFR").click();
         		document.getElementById("spawnCFSLX").click();
 			document.getElementById("spawnMAPSPOT").click();
@@ -322,9 +307,6 @@
     				<i class="material-icons right">send</i>
   				</button>
 			</div>
-		</div>
-		<div class="container" id="comment">
-			<a>載入中</a>
 		</div>
 	</div>
 		
