@@ -205,17 +205,22 @@
 	}
 
 	function checkCount() {
-		var url='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1230097452';
+    		var url = 'https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1230097452';
+    		var query = new google.visualization.Query(url);
 		query.setQuery("select * where B='COMMENT'");
-		query.send(Count);
+    		query.send(Count);
 	}
-	function Count(data) {
-		count = dataTable.getNumberOfRows();
-		count += 1;
-		document.getElementById("getNUMBER").innerHTML = count;
-		submitFormWithCount(count);
+	function Count(response) {
+    		if (response.isError()) {
+        		alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        		return;
+    		}
+    		var dataTable = response.getDataTable();
+    		var count = dataTable.getNumberOfRows();
+    		count += 1;
+    		document.getElementById("getNUMBER").innerHTML = count;
+    		submitFormWithCount(count);
 	}
-	
 	function submitFormWithCount(count) {
     		var nickname = document.getElementById('icon_prefix').value;
     		var comment = document.getElementById('textarea1').value;
@@ -243,7 +248,7 @@
 	}
 
 	function submitComment() {
-    		checkCount(); // 這將會觸發表單提交
+    		checkCount();
 	}
 		
 	window.onload = function () {
