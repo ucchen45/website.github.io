@@ -263,15 +263,15 @@
 如有謬誤，還請不吝指正。`;
     		var disclaimerConfirmed = confirm(disclaimerText);
     		if (disclaimerConfirmed) {
-			document.getElementById("spawnCFR").click();
-        		document.getElementById("spawnCFSLX").click();
-			document.getElementById("spawnMAPSPOT").click();
-			document.getElementById("spawnMAPNEWBIE").click();
-			document.getElementById("spawnMAPEASY").click();
-			document.getElementById("spawnMAPNORMAL").click();
-			document.getElementById("spawnMAPHARD").click();
-			document.getElementById("spawnMAPEXTREME").click();
-			document.getElementById("spawnCOMMENT").click();
+			load('CFR');
+			load('CF SLX');
+			load('MAP SPOT');
+			load('MAP NEWBIE');
+			load('MAP EASY');
+			load('MAP NORMAL');
+			load('MAP HARD');
+			load('MAP EXTREME');
+			load('COMMENT');
 		}
     		else {
         		window.location.href = "https://ucchen45.github.io/website.github.io/";
@@ -314,12 +314,10 @@
 		<h4 id="1">CANYON公路車</h4>
 		<h5>旗艦-CFR</h5>
 		<div class="row" id="cardCFR">
-			<a onclick="load('CFR')" id="spawnCFR">載入中</a>
 		</div>
 	
 		<h5>高階-CF SLX</h5>
 		<div class="row" id="cardCFSLX">
-			<a onclick="load('CF SLX')" id="spawnCFSLX">載入中</a>
 		</div>
 
 		<!--臺中自行車地圖-->
@@ -331,37 +329,31 @@
 		<h5>交流地點</h5>
 		<p>在出發之前，不妨找些志同道合的車友交流一番，或許還能相約一起騎車，既不怕迷路，也有互相激勵的效果。</p>
 		<div class="row" id="mapSPOT" style="height: 500px;">
-			<a onclick="load('MAP SPOT')" id="spawnMAPSPOT">載入中</a>
 		</div>
 		
 		<h5>路線-入門</h5>
 		<p>幾乎是任何人都能完成的路線，當你騎完一趟松鼠坡仍然意猶未盡，就該嘗試下一級的路線了。</p>
 		<div class="row" id="mapNEWBIE" style="height: 500px;">
-			<a onclick="load('MAP NEWBIE')" id="spawnMAPNEWBIE">載入中</a>
 		</div>
 
 		<h5>路線-簡單</h5>
 		<p>適合平日早晨出門運動的路線，結束之後吃個早餐，就是神清氣爽的一天最好的開始。</p>
 		<div class="row" id="mapEASY" style="height: 500px;">
-			<a onclick="load('MAP EASY')" id="spawnMAPEASY">載入中</a>
 		</div>
 
 		<h5>路線-普通</h5>
 		<p>適合平時週末練車，鍛鍊身體的同時也能欣賞風景，而且各休息點有許多美食待人享用，兜兜風轉換心情，繼續迎接下一個星期。</p>
 		<div class="row" id="mapNORMAL" style="height: 500px;">
-			<a onclick="load('MAP NORMAL')" id="spawnMAPNORMAL">載入中</a>
 		</div>
 
 		<h5>路線-困難</h5>
 		<p>深入山路的路線，補給要事先做好規劃，並且注意高海拔溫差與路況，也要有換胎與簡易維修工具，才能安全進行體能挑戰。</p>
 		<div class="row" id="mapHARD" style="height: 500px;">
-			<a onclick="load('MAP HARD')" id="spawnMAPHARD">載入中</a>
 		</div>
 		
 		<h5>路線-極限</h5>
 		<p>進行時間極長，非常考驗耐力，務必量力而為，且注意評估時間，避免天黑時從山區下滑以保安全。</p>
 		<div class="row" id="mapEXTREME" style="height: 500px;">
-			<a onclick="load('MAP EXTREME')" id="spawnMAPEXTREME">載入中</a>
 		</div>
 		
 		<!--留言板-->
@@ -388,7 +380,6 @@
 		</div>
 		<hr style="border-color: rgba(255, 255, 255, 0);">
 		<div class="container" id="showCOMMENT" style="background-color: rgba(255, 255, 255, 1);padding: 30px;">
-			<a onclick="load('COMMENT')" id="spawnCOMMENT">載入中</a>
 		</div>
 		<hr style="border-color: rgba(255, 255, 255, 0);" id="4">
 	</div>
