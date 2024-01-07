@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+  	<title>CANYON中文資訊論壇</title>
+  	<style>
+	html, body {
+	    height: 100%;
+	    margin: 0;
+	}
+	.page-container {
+	    display: flex;
+	    flex-direction: column;
+	    min-height: 100vh;
+	}
+	.content-wrap {
+	    flex: 1;
+	    padding-top: 64px;
+	}
+    	.background-image {
+      		background-image: url('https://drive.google.com/uc?export=view&id=1YUqa_8CZvjU1XSEyd4GQxhhY4ylijWW0');
+      		position: fixed;
+      		top: 0;
+      		left: 0;
+      		width: 100%;
+		height: 100%;
+		z-index: -1;
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+    	}
+    	#mainContainer.container {
+	      	background-color: rgba(255, 255, 255, 0.6);
+	      	color:black;
+	      	padding: 20px;
+    	}
+	.horizontal-table {
+	    width: 100%;
+	    border-collapse: collapse;
+	}
+	
+	.horizontal-table th,
+	.horizontal-table td {
+	    border: 1px solid #ddd;
+	    padding: 8px;
+	    text-align: middle;
+	}
+	
+	.horizontal-table th {
+	    font-weight: bold;
+	    width: 10%;
+	}
+	
+	.horizontal-table td {
+	    width: 22.5%; 
+	}
+   	nav {
+      		position: fixed;
+      		top: 0;
+      		width: 100%;
+      		z-index: 10;
+    	}
+	.horizontal-table img {
+	    	max-width: 100%;
+	    	height: auto; 
+	    	display: block;
+	    	margin: 0 auto;
+		transition: transform 0.3s ease;
+	}
+	.horizontal-table img:hover {
+    		transform: scale(3);
+	}
+    	nav, .nav-wrapper,
+    	footer, .page-footer {
+      		background-color: #424242;
+      		z-index: 10;
+    	}
+    	footer.page-footer {
+      		padding-bottom: 20px;
+    	}
+  	</style>
+</head>
+<body>
+<div class="page-container">
+  	<nav>
+    	<div class="nav-wrapper">
+      	<a href="index.html" class="brand-logo left">CANYON中文資訊論壇</a>
+    	</div>
+  	</nav>
+	
+	<div class="content-wrap">
+	<div class="background-image"></div>
+	<div class="container" id="mainContainer">
+  		<h4>ULTIMATE CF SLX</h4>
+  		<p>這兩款的價差相當大，因為他們使用的零件等級是不一樣的：</p>
+  		<p>輪組都是50mm高，不過可以看到重量是有些微差距；以及變速系統，一個是Ultegra，另一個直上Dura-Ace。</p>
+  		<p>整車重量就能看出心機，6.8公斤剛好壓在UCI規定的最低重量上，這是巧合嗎？我可不這麼認為。</p>
+		<h5>各車款比較</h5>
+		<table class="horizontal-table">
+		<tbody id="getTable">
+		</tbody>
+		</table>
+	</div>
+	</div>
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+    	google.charts.load('current', {'packages':['corechart']});
+    	function load() {
+		var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=0';
+        	var query = new google.visualization.Query(url);
+        	query.setQuery("select * where B='Ultimate CF SLX'");
+        	query.send(processData);
+    	}
+    	function processData(response) {
+        	var dataTable = response.getDataTable();
+        	var rows = dataTable.getNumberOfRows();
+		var columns = dataTable.getNumberOfColumns();
+		var datas = [];
+		for (var r=2; r<columns; r++) {
+			data = [];
+			for (var i=0; i<rows; i++){
+				data.push(dataTable.getFormattedValue(i, r));
+			}
+			datas.push(data);
+        	}
+		updateTable(datas);
+	}
+	function updateTable(data){
+		content="";
+		for (var r=0 ; r<data.length ; r++) {
+			content+=`<tr>`;
+			for (var i=0;i<data[r].length;i++){
+				if (i===0) {
+				content+=`<th>${data[r][i]}</th>`;
+		  		}
+				else if (r===2) {
+				content+=`<th><image src='${data[r][i]}'></th>`;
+				}
+				else {
+				content+=`<td>${data[r][i]}</td>`;
+				}
+			}
+			content+=`</tr>`;
+		}document.getElementById("getTable").innerHTML = content;
+	}
+	window.onload = function () {
+		load();
+	}
+	</script>
+  	<footer class="page-footer">
+    	<div class="row">
+	<div class="col l3 m1 s2"></div>
+	<div class="col l2 m4 s10">
+                <h5 class="white-text">關於作者</h5>
+                <p class="grey-text text-lighten-3">陳又晞，目前就讀中興大學，自由車社成員，自行車愛好者。</p>
+		<p class="grey-text text-lighten-3"><i class="material-icons prefix" style="font-size: 20px">email</i>youxichen55@gmail.com</p>
+        </div>
+	<div class="col l0 m2 s2"></div>
+	<div class="col l4 m4 s10">
+                <h5 class="white-text">連結</h5>
+                <ul>
+                  	<li><a class="grey-text text-lighten-3" href="https://github.com/ucchen45/website.github.io" target="_blank">Github</a></li>
+			<li><a class="grey-text text-lighten-3" href="https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/edit?usp=sharing" target="_blank">網站資料試算表</a></li>
+                  	<li><a class="grey-text text-lighten-3" href="https://www.canyon.com/en-tw/" target="_blank">CANYON官方網站</a></li>
+			<li><a class="grey-text text-lighten-3" href="https://www.facebook.com/NCHUCyclingClub" target="_blank">中興大學自由車社粉絲專頁</a></li>
+                </ul>
+        </div>
+	<div class="col l3 m1 s0"></div>
+	</footer>
+</div>
+</body>
+</html>
