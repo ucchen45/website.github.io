@@ -61,6 +61,27 @@
       		padding-bottom: 20px;
     	}
   	</style>
+</head>
+<body>
+  	<nav>
+    	<div class="nav-wrapper">
+      	<a href="https://ucchen45.github.io/website.github.io/" class="brand-logo left">CANYON中文資訊論壇</a>
+    	</div>
+  	</nav>
+	<div class="background-image"></div>
+	
+	<div class="container" id="mainContainer">
+  		<h3>Aeroad CFR</h3>
+  		<p>各車款除了塗裝外表，最大的差異在哪裡呢？果然還是外表。說實話，這些規格都差不多。</p>
+  		<p>選擇完全是個人信仰問題，我選Cosmos，這種霸氣黑色配上冷硬的Dura-Ace曲柄，卻又配上一個高調星空圖裝，浪漫。Di2就是比較便宜些，MVDP就是來自職業賽場的心靈加成吧。</p>
+  		<p>想選Di2版要注意他不是配Shimano大盤，性能上不會有什麼差，外觀可以接受就好。MVDP版則是有配Dura-Ace輪組，算是一個小加分項。</p>
+
+		<a href="#" onclick="load()" id="click">載入中</a>
+		<table class="horizontal-table">
+		<tbody id="getTable">
+		</tbody>
+		</table>
+	</div>
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
     	google.charts.load('current', {'packages':['corechart']});
@@ -90,12 +111,10 @@
 			content+=`<tr>`;
 			for (var i=0;i<data[r].length;i++){
 				if (i===0) {
-				content+=`
-	                	<th>${data[r][i]}</th>`;
+				content+=`<th>${data[r][i]}</th>`;
 		  		}
-				else{
-				content+=`
-	                	<td>${data[r][i]}</td>`;
+				else {
+				content+=`<td>${data[r][i]}</td>`;
 				}
 			}
 			content+=`</tr>`;
@@ -105,28 +124,6 @@
 		document.getElementById("click").click();
 	}
 	</script>
-</head>
-<body>
-  	<nav>
-    	<div class="nav-wrapper">
-      	<a href="https://ucchen45.github.io/website.github.io/" class="brand-logo left">CANYON中文資訊論壇</a>
-    	</div>
-  	</nav>
-	<div class="background-image"></div>
-	
-	<div class="container" id="mainContainer">
-  		<h3>Aeroad CFR</h3>
-  		<p>各車款除了塗裝外表，最大的差異在哪裡呢？果然還是外表。說實話，這些規格都差不多。</p>
-  		<p>選擇完全是個人信仰問題，我選Cosmos，這種霸氣黑色配上冷硬的Dura-Ace曲柄，卻又配上一個高調星空圖裝，浪漫。Di2就是比較便宜些，MVDP就是來自職業賽場的心靈加成吧。</p>
-  		<p>想選Di2版要注意他不是配Shimano大盤，性能上不會有什麼差，外觀可以接受就好。MVDP版則是有配Dura-Ace輪組，算是一個小加分項。</p>
-
-		<a href="#" onclick="load()" id="click">載入中</a>
-		<table class="horizontal-table">
-		<tbody id="getTable">
-		</tbody>
-		</table>
-	</div>
-	
   	<footer class="page-footer">
     	<div class="row">
 	<div class="col l3 m1 s2"></div>
