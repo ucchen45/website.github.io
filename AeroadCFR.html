@@ -25,31 +25,27 @@
 	      	padding: 20px;
 		padding-top: 64px;
     	}
-	.vertical-table th {
+	.horizontal-table {
+	    width: 100%;
+	    border-collapse: collapse;
+	}
+	
+	.horizontal-table th,
+	.horizontal-table td {
+	    border: 1px solid #ddd;
+	    padding: 8px;
+	    text-align: left;
+	}
+	
+	.horizontal-table th {
 	    background-color: #f5f5f5;
 	    font-weight: bold;
-	    text-align: left;
-	    border-top: 1px solid #ddd;
-	    width: 20%; /* 或者根據您的需求設定一個具體的寬度 */
+	    width: 20%; /* 設置較小的固定寬度給名稱欄位 */
 	}
-	.vertical-table td {
-	    border-bottom: 1px solid #ddd;
+	
+	.horizontal-table td {
+	    width: 40%; /* 設置其他欄位的寬度，確保總和為100% */
 	}
-	.vertical-table td:first-child {
-	    width: 10%;
-	}
-	.vertical-table th:empty {
-	    border-top: none;
-	}
-	@media screen and (max-width: 600px) {
-	    .vertical-table th, .vertical-table td {
-	        display: block;
-	        width: 100%;
-	    }
-	.vertical-table th:empty {
-	        display: none;
-	}
-}
    	nav {
       		position: fixed;
       		top: 0;
@@ -80,18 +76,21 @@
   		<p>選擇完全是個人信仰問題，我選Cosmos，這種霸氣黑色配上冷硬的Dura-Ace曲柄，卻又配上一個高調星空圖裝，浪漫。Di2就是比較便宜些，MVDP就是來自職業賽場的心靈加成吧。</p>
   		<p>想選Di2版要注意他不是配Shimano大盤，性能上不會有什麼差，外觀可以接受就好。MVDP版則是有配Dura-Ace輪組，算是一個小加分項。</p>
 		
-		<table class="vertical-table">
+		<table class="horizontal-table">
 		    <tbody>
 		        <tr>
 		            <th>Name</th>
 		            <td>Alvin</td>
-		            <td>Eclair</td>
-		            <td>$0.87</td>
+		            <td>Alan</td>
 		        </tr>
 		        <tr>
-		            <th></th>
-		            <td>Alan</td>
+		            <th>Item Name</th>
+		            <td>Eclair</td>
 		            <td>Jellybean</td>
+		        </tr>
+		        <tr>
+		            <th>Item Price</th>
+		            <td>$0.87</td>
 		            <td>$3.76</td>
 		        </tr>
 		    </tbody>
