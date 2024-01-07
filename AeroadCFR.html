@@ -79,20 +79,21 @@
 		for (var r=0; r<rows; r++) {
 			data = [];
 			for (var i=1; i<columns; i++){
-				data.push(dataTable.getFormattedValue(r, i));
+				data.push(dataTable.getFormattedValue(i, r));
 			}
 			datas.push(data);
         	}
-		dataTable(datas);
+		updateTable(datas);
 	}
-	function dataTable(data){
+	function updateTable(data){
 		content="";
 		for (var r=0 ; r<data.length ; r++) {
 		content+=`
-			<tr>
-		            <th>${data[1][r]}</th>
-		            <td>${data[2][r]}</td>
-		        </tr>`;
+		<tr>
+	                <th>${data[r][0]}</th>
+	                <td>${data[r][1]}</td>
+	                <td>${data[r][2]}</td>
+	        </tr>`;
 		}document.getElementById("getTable").innerHTML = content;
 	}
 	window.onload = function () {
@@ -113,10 +114,10 @@
   		<p>各車款除了塗裝外表，最大的差異在哪裡呢？果然還是外表。說實話，這些規格都差不多。</p>
   		<p>選擇完全是個人信仰問題，我選Cosmos，這種霸氣黑色配上冷硬的Dura-Ace曲柄，卻又配上一個高調星空圖裝，浪漫。Di2就是比較便宜些，MVDP就是來自職業賽場的心靈加成吧。</p>
   		<p>想選Di2版要注意他不是配Shimano大盤，性能上不會有什麼差，外觀可以接受就好。MVDP版則是有配Dura-Ace輪組，算是一個小加分項。</p>
-		
+
+		<a href="#" onclick="load()" id="click">載入中</a>
 		<table class="horizontal-table">
 		<tbody id="getTable">
-			<a href="#" onclick="load()" id="click">載入中</a>
 		</tbody>
 		</table>
 	</div>
