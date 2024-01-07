@@ -5,7 +5,7 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   
-  	<title>CANYON中文資訊論壇</title>
+  	<title>AEROAD CF SLX 詳細資訊</title>
   	<style>
 	html, body {
 	    height: 100%;
@@ -116,18 +116,21 @@
         	query.send(processData);
     	}
     	function processData(response) {
-        	var dataTable = response.getDataTable();
-        	var rows = dataTable.getNumberOfRows();
-		var columns = dataTable.getNumberOfColumns();
-		var datas = [];
-		for (var r=2; r<columns; r++) {
-			data = [];
-			for (var i=0; i<rows; i++){
-				data.push(dataTable.getFormattedValue(i, r));
-			}
-			datas.push(data);
-        	}
-		updateTable(datas);
+	    var dataTable = response.getDataTable();
+	    var rows = dataTable.getNumberOfRows();
+	    var columns = dataTable.getNumberOfColumns();
+	    var datas = [];
+	    for (var c = 2; c < columns; c++) {
+	        var columnData = [];
+	        for (var r = 0; r < rows; r++) {
+	            var value = dataTable.getFormattedValue(r, c);
+	            if (value) {
+	                columnData.push(value);
+	            }
+	        }
+	        datas.push(columnData);
+	    }
+	    updateTable(datas);
 	}
 	function updateTable(data){
 		content="";
