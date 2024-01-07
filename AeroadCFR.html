@@ -63,8 +63,7 @@
   	</style>
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
-    		google.charts.load('current', {'packages':['corechart']});
-		var submitted = false;	
+    	google.charts.load('current', {'packages':['corechart']});
     	function load() {
 		var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=0';
         	var query = new google.visualization.Query(url);
@@ -98,6 +97,7 @@
 				content+=`
 	                	<td>${data[r][i]}</td>`;
 				}
+			}
 			content+=`</tr>`;
 		}document.getElementById("getTable").innerHTML = content;
 	}
