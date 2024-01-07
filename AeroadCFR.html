@@ -7,6 +7,21 @@
   
   	<title>CANYON中文資訊論壇-AeroadCFR</title>
   	<style>
+	html, body {
+	    height: 100%;
+	    margin: 0;
+	}
+	
+	.page-container {
+	    display: flex;
+	    flex-direction: column;
+	    min-height: 100vh;
+	}
+	
+	.content-wrap {
+	    flex: 1;
+	    padding-top: 64px;
+	}
     	.background-image {
       		background-image: url('https://drive.google.com/uc?export=view&id=1YUqa_8CZvjU1XSEyd4GQxhhY4ylijWW0');
       		position: fixed;
@@ -23,8 +38,6 @@
 	      	background-color: rgba(255, 255, 255, 0.5);
 	      	color:black;
 	      	padding: 20px;
-		padding-top: 64px;
-		flex: 1;
     	}
 	.horizontal-table {
 	    width: 100%;
@@ -64,13 +77,15 @@
   	</style>
 </head>
 <body>
+<div class="page-container">
   	<nav>
     	<div class="nav-wrapper">
       	<a href="https://ucchen45.github.io/website.github.io/" class="brand-logo left">CANYON中文資訊論壇</a>
     	</div>
   	</nav>
-	<div class="background-image"></div>
 	
+	<div class="content-wrap">
+	<div class="background-image"></div>
 	<div class="container" id="mainContainer">
   		<h3>Aeroad CFR</h3>
   		<p>各車款除了塗裝外表，最大的差異在哪裡呢？果然還是外表。說實話，這些規格都差不多。</p>
@@ -81,6 +96,7 @@
 		<tbody id="getTable">
 		</tbody>
 		</table>
+	</div>
 	</div>
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
@@ -144,5 +160,6 @@
         </div>
 	<div class="col l3 m1 s0"></div>
 	</footer>
+</div>
 </body>
 </html>
