@@ -76,9 +76,9 @@
         	var rows = dataTable.getNumberOfRows();
 		var columns = dataTable.getNumberOfColumns();
 		var datas = [];
-		for (var r=0; r<rows; r++) {
+		for (var r=0; r<columns; r++) {
 			data = [];
-			for (var i=1; i<columns; i++){
+			for (var i=1; i<rows; i++){
 				data.push(dataTable.getFormattedValue(i, r));
 			}
 			datas.push(data);
