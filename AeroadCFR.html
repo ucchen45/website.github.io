@@ -5,7 +5,7 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   
-  	<title>CANYON中文資訊論壇-AeroadCFR</title>
+  	<title>CANYON中文資訊論壇</title>
   	<style>
 	html, body {
 	    height: 100%;
@@ -129,6 +129,9 @@
 				if (i===0) {
 				content+=`<th>${data[r][i]}</th>`;
 		  		}
+				else if (r===2) {
+				content+=`<th><image src='${data[r][i]}'></th>`;
+				}
 				else {
 				content+=`<td>${data[r][i]}</td>`;
 				}
