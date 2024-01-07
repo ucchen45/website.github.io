@@ -88,12 +88,17 @@
 	function updateTable(data){
 		content="";
 		for (var r=0 ; r<data.length ; r++) {
-		content+=`
-		<tr>
-	                <th>${data[r][0]}</th>
-	                <td>${data[r][1]}</td>
-	                <td>${data[r][2]}</td>
-	        </tr>`;
+			content+=`<tr>`;
+			for (var i=0;i<data[r].length;i++){
+				if (i===0) {
+				content+=`
+	                	<th>${data[r][i]}</th>`;
+		  		}
+				else{
+				content+=`
+	                	<td>${data[r][i]}</td>`;
+				}
+			content+=`</tr>`;
 		}document.getElementById("getTable").innerHTML = content;
 	}
 	window.onload = function () {
