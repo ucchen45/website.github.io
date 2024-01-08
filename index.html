@@ -128,8 +128,12 @@
 			data = [];	//這是存放單筆資料中的每一個欄位值的陣列，每個元素對應到這筆資料在該欄位的值
 			for (var i=1; i<columns; i++){
 				var value = dataTable.getFormattedValue(r, i)
+				//若遇到空值則跳出迴圈，完成這筆資料以節省效能
 				if (value){
 					data.push(value);
+				}
+				else{
+					break;
 				}
 			}
 			datas.push(data);
