@@ -4,8 +4,8 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
 	<title>CANYON中文資訊論壇</title>	
+	
 	<style>
 		:root {
   		scroll-padding-top: 64px;
@@ -93,7 +93,8 @@
 	</style>
 	
 	<script>
-    	function scrollToElement(id) {
+    	//設置錨點捲動行為
+	function scrollToElement(id) {
         	var element = document.getElementById(id);
         	if (element) {
             	element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
@@ -101,12 +102,12 @@
     	}
 	</script>
 
-	<!--讀取自行車資訊試算表-->
+	<!--讀取試算表-->
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
     	google.charts.load('current', {'packages':['corechart']});
-	var submitted = false;	
     	function load(tag) {
+		//根據函式呼叫時的標籤，讀取留言工作表或資訊工作表
         	if (tag==="COMMENT"){
 			var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1000193211';
 		}
@@ -115,21 +116,22 @@
 		}
         	var query = new google.visualization.Query(url);
         	query.setQuery("select * where B='"+tag+"'");
-        	query.send(processData);
+        	query.send(processData);	//將對應標籤欄的每一筆資料送到資料處理函式
     	}
     	function processData(response) {
         	var dataTable = response.getDataTable();
         	var rows = dataTable.getNumberOfRows();
 		var columns = dataTable.getNumberOfColumns();
 		var tag = dataTable.getFormattedValue(0,1);
-		var datas = [];
+		var datas = [];		//這是存放所有讀取到資料的陣列，每一個元素就是一筆資料
 		for (var r=0; r<rows; r++) {
-			data = [];
+			data = [];	//這是存放單筆資料中的每一個欄位值的陣列，每個元素對應到這筆資料在該欄位的值
 			for (var i=1; i<columns; i++){
 				data.push(dataTable.getFormattedValue(r, i));
 			}
 			datas.push(data);
         	}
+		//將二維陣列根據標籤發送至相對應的產生內容函式
 		if (tag==="CFR"||tag==="CF SLX"){
 			bikeCard(datas,tag);
 		}
@@ -137,11 +139,11 @@
 			mapCard(datas,tag);
 		}
 		else if (tag==="COMMENT") {
-			showComment(datas,tag);
+			showComment(datas);
 		}
     	}
-
-    	function bikeCard(data,tag) {	
+	//產生自行車卡片
+    	function bikeCard(data,tag) {
 		var card = "";
 		for (var r=0 ; r<data.length ; r++) {
 			card+=	`
@@ -169,7 +171,7 @@
 			document.getElementById("cardCFSLX").innerHTML = card;
 		}
 	}
-
+	//產生地圖卡片
 	function mapCard(data,tag) {
 		var card="";
 		for (var r=0 ; r<data.length ; r++) {
@@ -196,8 +198,8 @@
 			document.getElementById("mapEXTREME").innerHTML = card;
 		}
 	}
-
-	function showComment(data,tag) {
+	//在留言板顯示留言
+	function showComment(data) {
 		var comment="";
 		for (var r=0 ; r<data.length ; r++){
 			comment += `
@@ -206,14 +208,25 @@
        			<hr color="gray">`;
 		}document.getElementById("showCOMMENT").innerHTML = comment;
 	}
-
-	function checkCount() {
+	
+	//以下關於提交留言內容至Google表單
+	//用於檢查是否送出內容
+	var submitted = false;
+	//按下送出後觸發
+	function prepareSubmit() {
+    		submitted = true;
+    		submitComment();
+	}
+	function submitComment() {
+    		checkCount();
+	}
+	function checkCount() {		//從留言工作表讀取留言
     		var url = 'https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=1000193211';
     		var query = new google.visualization.Query(url);
 		query.setQuery("select * where B='COMMENT'");
     		query.send(Count);
 	}
-	function Count(response) {
+	function Count(response) {	//查看目前留言數，加一之後回傳
     		if (response.isError()) {
         		alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
         		return;
@@ -224,10 +237,11 @@
     		document.getElementById("getNUMBER").innerHTML = count;
     		submitFormWithCount(count);
 	}
-	function submitFormWithCount(count) {
-    		var nickname = document.getElementById('icon_prefix').value;
+	function submitFormWithCount(count) {		//接收目前樓層
+    		var nickname = document.getElementById('icon_prefix').value;	//自輸入欄擷取暱稱、留言內容
     		var comment = document.getElementById('textarea1').value;
-    		var form = document.createElement('form');
+    		//將表單填入的地方設為隱藏的iframe，以便使收到回覆頁面不顯示
+		var form = document.createElement('form');
     		form.target = 'hidden_iframe';
         	form.method = 'POST';
         	form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSdAROsTF04x-I9K57HfPzHWQh3Sc0sxG5k1kfCGiQyIwetfeQ/formResponse';
@@ -239,25 +253,18 @@
             		input.value = value;
             		form.appendChild(input);
         	}
+		//利用「取得預先填入連結」，得到對應問題的id，標籤欄填入預設值，其他欄分別填入取得的字串
         	createInput('entry.1464776894', 'COMMENT');
         	createInput('entry.581370753', nickname);
         	createInput('entry.1171223318', comment);
     		createInput('entry.195910240', count.toString());
     		document.body.appendChild(form);
-    		form.submit();
+    		//提交表單並清空輸入欄
+		form.submit();
     		document.getElementById('icon_prefix').value = '';
     		document.getElementById('textarea1').value = '';
 	}
-	
-	function prepareSubmit() {
-    		submitted = true;
-    		submitComment();
-	}
-
-	function submitComment() {
-    		checkCount();
-	}
-		
+	//進入頁面跳出免責聲明訊息，確認後呼叫產生內容函式，利用id將對應元素插入至指定區域內，否則重新整理頁面
 	window.onload = function () {
     		var disclaimerText = `本站資訊僅供參考，購買時請以CANYON官方網站為準。
 如有謬誤，還請不吝指正。`;
@@ -274,7 +281,7 @@
 			load('COMMENT');
 		}
     		else {
-        		window.location.href = "https://ucchen45.github.io/website.github.io/";
+        		window.location.reload();
 		}
 	};
 	</script>
@@ -283,6 +290,7 @@
 	<!--頂部區塊-->
 	<nav>
     	<div class="nav-wrapper">
+		<!--設置含有錨點的可點擊元素-->
       		<a href="#" onclick="event.preventDefault();scrollToElement('0')" class="brand-logo left">CANYON中文資訊論壇</a>
       		<ul id="nav-mobile" class="right">
         		<li class="hide-on-custom"><a href="#" onclick="event.preventDefault();scrollToElement('1')">CANYON公路車</a></li>
@@ -295,7 +303,6 @@
 	
 	<!--內文-->
 	<div class="background-image"></div>
-
 	<div class="container" id="mainContainer">
 		<h4 id="0">前言</h4>
 		<p>CANYON，一個於三大環賽擁有許多亮眼表現的德國品牌。許多車友因為高昂運費以及英文網站而對它敬而遠之，但其實在眾多一級車之中，即使加上運費，它仍是划算的選擇(興許與它的網路直銷模式有關)。且與許多廠牌為換取重量，犧牲部分空氣力學效果的折衷做法不同，它們的空力車是純粹的，也是作者所推崇之處。</p>
@@ -366,6 +373,7 @@
 		
 		<!--留言板-->
 		<h4 id="3">留言板</h4>
+		<!--用於將提交表單行為隱藏的設為不顯示的iframe，確認到表單送出後將會重新整理以便顯示新留言-->
 		<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){window.location.reload();}"></iframe>
 		<div class="container" id="comment">
 			<p>無須登入，快來與車友們交換意見吧。</p>
