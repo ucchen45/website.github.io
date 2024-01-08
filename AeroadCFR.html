@@ -105,10 +105,12 @@
 		</table>
 	</div>
 	</div>
+	<!--將JavaScript設置在id所在之後，確保在載入對應元素後才執行-->
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
     	google.charts.load('current', {'packages':['corechart']});
-    	function load() {
+    	//讀取試算表，將對應標籤欄的每一筆資料送到資料處理函式
+	function load() {
 		var url ='https://docs.google.com/spreadsheets/d/1rqzP8llo3rywXwTukFZeP1VFN4eSMCeOZMYA0mLi2fQ/gviz/tq?gid=0';
         	var query = new google.visualization.Query(url);
         	query.setQuery("select * where B='Aeroad CFR'");
@@ -118,29 +120,34 @@
 	    var dataTable = response.getDataTable();
 	    var rows = dataTable.getNumberOfRows();
 	    var columns = dataTable.getNumberOfColumns();
-	    var datas = [];
+	    var datas = [];	//這是存放所有讀取到資料的陣列，每一個元素就是一筆資料
 	    for (var c = 2; c < columns; c++) {
-	        var columnData = [];
+	        var columnData = [];	//這是存放單筆資料中的每一個欄位值的陣列，每個元素對應到這筆資料在該欄位的值
 	        for (var r = 0; r < rows; r++) {
-	            var value = dataTable.getFormattedValue(r, c);
-	            if (value) {
-	                columnData.push(value);
-	            }
+	            	var value = dataTable.getFormattedValue(r, c);	//要呈現每一筆資料垂直、並排顯示，因此將行列互換
+	            	//遇到空值跳出迴圈完成這筆資料
+			if (value) {
+	                	columnData.push(value);
+	            	}
+			else{
+				break;
+			}
 	        }
 	        datas.push(columnData);
 	    }
 	    updateTable(datas);
 	}
+	//產生表格
 	function updateTable(data){
 		content="";
 		for (var r=0 ; r<data.length ; r++) {
 			content+=`<tr>`;
 			for (var i=0;i<data[r].length;i++){
 				if (i===0) {
-				content+=`<th>${data[r][i]}</th>`;
+				content+=`<th>${data[r][i]}</th>`;	//索引為0設置為標題欄
 		  		}
 				else if (r===2) {
-				content+=`<th><img src='${data[r][i]}'></th>`;
+				content+=`<th><img src='${data[r][i]}'></th>`;	//索引為2設置為圖片
 				}
 				else {
 				content+=`<td>${data[r][i]}</td>`;
@@ -149,7 +156,7 @@
 			content+=`</tr>`;
 		}document.getElementById("getTable").innerHTML = content;
 	}
-	window.onload = function () {
+	window.onload = function () {		//頁面載入後呼叫函式產生內容
 		load();
 	}
 	</script>
