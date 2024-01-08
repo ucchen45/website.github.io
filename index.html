@@ -207,13 +207,15 @@
 	}
 	//在留言板顯示留言
 	function showComment(data) {
-		var comment="";
-		for (var r=0 ; r<data.length ; r++){
-			comment += `
-    			<p>B${data[r][1]} ${data[r][2]}<span style="color: blue;">${data[r][4]}</span></p>
-    			<p style="word-wrap: break-word;">${data[r][3]}</p>
-       			<hr color="gray">`;
-		}document.getElementById("showCOMMENT").innerHTML = comment;
+    		var comment = "";
+    		for (var r = 0; r < data.length; r++) {
+        	var userComment = data[r][4] ? data[r][4] : ""; // 檢查是否存在，不存在則使用空字符串
+        	comment += `
+            		<p>B${data[r][1]} ${data[r][2]}<span style="color: blue;">${userComment}</span></p>
+            		<p style="word-wrap: break-word;">${data[r][3]}</p>
+            		<hr color="gray">`;
+    		}
+    		document.getElementById("showCOMMENT").innerHTML = comment;
 	}
 	
 	//以下關於提交留言內容至Google表單
