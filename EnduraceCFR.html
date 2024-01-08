@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--註解參見AeroadCFR.html-->
 <html>
 <head>
   	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -123,10 +124,13 @@
 	    for (var c = 2; c < columns; c++) {
 	        var columnData = [];
 	        for (var r = 0; r < rows; r++) {
-	            var value = dataTable.getFormattedValue(r, c);
-	            if (value) {
-	                columnData.push(value);
-	            }
+	            	var value = dataTable.getFormattedValue(r, c);
+			if (value) {
+	                	columnData.push(value);
+	            	}
+			else{
+				break;
+			}
 	        }
 	        datas.push(columnData);
 	    }
