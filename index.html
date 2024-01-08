@@ -127,7 +127,10 @@
 		for (var r=0; r<rows; r++) {
 			data = [];	//這是存放單筆資料中的每一個欄位值的陣列，每個元素對應到這筆資料在該欄位的值
 			for (var i=1; i<columns; i++){
-				data.push(dataTable.getFormattedValue(r, i));
+				var value = dataTable.getFormattedValue(r, i)
+				if (value){
+					data.push(value);
+				}
 			}
 			datas.push(data);
         	}
